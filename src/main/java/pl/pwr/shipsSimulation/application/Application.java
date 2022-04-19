@@ -12,12 +12,14 @@ import pl.pwr.shipsSimulation.terrain.TerrainMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Application {
     public static void main(String[] args) {
         Random seed = new Random();
-        MapSize mapSize = new MapSize(48,48);
+        MapSize mapSize = new MapSize(32,32);
         TerrainMap terrainMap = new TerrainMap(seed, mapSize);
 
         List<Team> teamList = new ArrayList<>();
@@ -31,9 +33,19 @@ public class Application {
         PositionController positionController = new PositionController(seed, mapSize);
         ShipPositionMap shipPositionMap = new ShipPositionMap(shipList, positionController);
 
-        shipList.forEach(ship -> System.out.println(shipPositionMap.getPositionOfShip(ship)));
-        shipPositionMap.moveShips();
-        shipList.forEach(ship -> System.out.println(shipPositionMap.getPositionOfShip(ship)));
+        AtomicBoolean conflict = new AtomicBoolean(false);
+        AtomicInteger moves = new AtomicInteger(0);
 
+        while(!conflict.get()){
+            shipList.forEach(ship -> {
+                shipPositionMap.moveShip(ship);
+                moves.getAndIncrement();
+                if (shipPositionMap.isShipConflict(ship)){
+                    conflict.set(true);
+                }
+            });
+        }
+
+        System.out.println("Ship conflict after " + moves + " moves");
     }
 }

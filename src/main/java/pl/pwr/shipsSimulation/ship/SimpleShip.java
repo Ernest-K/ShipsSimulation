@@ -3,8 +3,8 @@ package pl.pwr.shipsSimulation.ship;
 import java.util.UUID;
 
 public class SimpleShip implements Ship{
-    UUID teamId;
-    ShipType shipType;
+    private final UUID teamId;
+    private final ShipType shipType;
 
     public SimpleShip(UUID teamId, ShipType shipType) {
         this.teamId = teamId;

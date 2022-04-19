@@ -44,7 +44,7 @@ public class PositionController {
         return newPosition;
     }
 
-    public Position changePosition(Position position, Direction direction){
+    private Position changePosition(Position position, Direction direction){
         switch (direction){
             case TOP:
                 position.setY(position.getY() + 1);
@@ -60,5 +60,18 @@ public class PositionController {
                 break;
         }
         return position;
+    }
+
+    public boolean isOtherPositionInRange(Position referencePosition, List<Position> positionList, int range){
+        for(Position position : positionList){
+            if(isInRange(position, referencePosition, range)){
+                return true;
+            };
+        }
+        return false;
+    }
+
+    private boolean isInRange(Position position1, Position position2, int range){
+        return position1.getX() >= position2.getX() - range && position1.getX() <= position2.getX() + range && position1.getY() >= position2.getY() - range && position1.getY() <= position2.getY() + range;
     }
 }
