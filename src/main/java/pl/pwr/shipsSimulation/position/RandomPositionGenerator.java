@@ -13,7 +13,7 @@ public class RandomPositionGenerator {
         this.mapSize = mapSize;
     }
 
-    public Position getPosition(){
+    public Position generatePosition(){
         return new Position(seed.nextInt(mapSize.getWidth()), seed.nextInt(mapSize.getHeight()));
     }
 }

@@ -19,7 +19,6 @@ public class Application {
         Random seed = new Random();
         MapSize mapSize = new MapSize(48,48);
         TerrainMap terrainMap = new TerrainMap(seed, mapSize);
-        terrainMap.draw();
 
         List<Team> teamList = new ArrayList<>();
         teamList.add(new Team("Blue"));
@@ -32,6 +31,8 @@ public class Application {
         PositionController positionController = new PositionController(seed, mapSize);
         ShipPositionMap shipPositionMap = new ShipPositionMap(shipList, positionController);
 
+        shipList.forEach(ship -> System.out.println(shipPositionMap.getPositionOfShip(ship)));
+        shipPositionMap.moveShips();
         shipList.forEach(ship -> System.out.println(shipPositionMap.getPositionOfShip(ship)));
 
     }

@@ -6,7 +6,6 @@ import pl.pwr.shipsSimulation.position.PositionController;
 import java.util.List;
 import java.util.Map;
 
-
 public class ShipPositionMap {
     private final List<Ship> shipList;
     private final PositionController positionController;
@@ -21,4 +20,9 @@ public class ShipPositionMap {
     public Position getPositionOfShip(Ship ship){
         return shipPositions.get(ship);
     }
+
+    public void moveShip(Ship ship){
+        shipPositions.replace(ship, positionController.RandomMove(shipPositions.get(ship)));
+    }
+
 }
