@@ -1,14 +1,14 @@
 package pl.pwr.shipsSimulation.position;
 
-import pl.pwr.shipsSimulation.map.MapSize;
+import pl.pwr.shipsSimulation.board.BoardSize;
 
 import java.util.List;
 
 public class PositionValidator {
-    private final MapSize mapSize;
+    private final BoardSize boardSize;
 
-    public PositionValidator(MapSize mapSize) {
-        this.mapSize = mapSize;
+    public PositionValidator(BoardSize boardSize) {
+        this.boardSize = boardSize;
     }
 
     public boolean isOccupied(List<Position> positionList, Position position){
@@ -16,6 +16,6 @@ public class PositionValidator {
     }
 
     public boolean borderCollision(Position position){
-        return position.getX() < 0 || position.getX() > mapSize.getWidth() - 1 || position.getY() < 0 || position.getY() > mapSize.getHeight() - 1;
+        return position.getX() < 0 || position.getX() > boardSize.getWidth() - 1 || position.getY() < 0 || position.getY() > boardSize.getHeight() - 1;
     }
 }

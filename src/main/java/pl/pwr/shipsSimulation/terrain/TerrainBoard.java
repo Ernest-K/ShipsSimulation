@@ -1,29 +1,29 @@
 package pl.pwr.shipsSimulation.terrain;
 
-import pl.pwr.shipsSimulation.map.MapSize;
+import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.position.Position;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class TerrainMap {
+public class TerrainBoard {
     public final Random seed;
     public final List<TerrainType> terrainTypeList;
-    public final MapSize mapSize;
+    public final BoardSize boardSize;
     public int[][] terrainIdMap;
 
-    public TerrainMap(Random seed, MapSize mapSize) {
+    public TerrainBoard(Random seed, BoardSize boardSize) {
         this.seed = seed;
         this.terrainTypeList = Arrays.asList(TerrainType.class.getEnumConstants());
-        this.mapSize = mapSize;
-        TerrainGenerator terrainGenerator = new TerrainGenerator(seed, mapSize, terrainTypeList);
+        this.boardSize = boardSize;
+        TerrainGenerator terrainGenerator = new TerrainGenerator(seed, boardSize, terrainTypeList);
         this.terrainIdMap = terrainGenerator.generate();
     }
 
     public void draw(){
-        for (int i = 0; i < mapSize.getHeight(); i++) {
-            for (int j = 0; j < mapSize.getWidth(); j++) {
+        for (int i = 0; i < boardSize.getHeight(); i++) {
+            for (int j = 0; j < boardSize.getWidth(); j++) {
                 System.out.print(terrainIdMap[i][j] + "|");
             }
             System.out.print('\n');

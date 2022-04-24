@@ -1,6 +1,6 @@
 package pl.pwr.shipsSimulation.position;
 
-import pl.pwr.shipsSimulation.map.MapSize;
+import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.ship.Ship;
 
 import java.util.ArrayList;
@@ -11,15 +11,15 @@ import java.util.Random;
 
 public class PositionController {
     private final Random seed;
-    private final MapSize mapSize;
+    private final BoardSize boardSize;
     private final PositionValidator positionValidator;
     private final RandomPositionGenerator randomPositionGenerator;
 
-    public PositionController(Random seed, MapSize mapSize) {
+    public PositionController(Random seed, BoardSize boardSize) {
         this.seed = seed;
-        this.mapSize = mapSize;
-        this.positionValidator = new PositionValidator(mapSize);
-        this.randomPositionGenerator = new RandomPositionGenerator(seed, mapSize);
+        this.boardSize = boardSize;
+        this.positionValidator = new PositionValidator(boardSize);
+        this.randomPositionGenerator = new RandomPositionGenerator(seed, boardSize);
     }
 
     public Map<Ship, Position> setOnRandomPosition(List<Ship> shipList){
