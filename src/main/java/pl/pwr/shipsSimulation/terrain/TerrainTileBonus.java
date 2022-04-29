@@ -1,18 +1,18 @@
 package pl.pwr.shipsSimulation.terrain;
 
-public class TerrainBonus {
+public class TerrainTileBonus {
     private static final double DEFAULT_ATTACK_BONUS = 1;
     private static final double DEFAULT_DEFEND_BONUS = 1;
 
     private final double attackBonus;
     private final double defendBonus;
 
-    public TerrainBonus(double attackBonus, double defendBonus) {
+    public TerrainTileBonus(double attackBonus, double defendBonus) {
         this.attackBonus = attackBonus;
         this.defendBonus = defendBonus;
     }
 
-    public TerrainBonus(){
+    public TerrainTileBonus(){
         this.attackBonus = DEFAULT_ATTACK_BONUS;
         this.defendBonus = DEFAULT_DEFEND_BONUS;
     }

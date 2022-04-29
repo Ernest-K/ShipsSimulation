@@ -9,12 +9,12 @@ import java.util.Random;
 public class TerrainGenerator {
     private final Random seed;
     private final BoardSize boardSize;
-    private final List<TerrainType> terrainTypeList;
+    private final List<TerrainTileType> terrainTileTypeList;
 
-    public TerrainGenerator(Random seed, BoardSize boardSize, List<TerrainType> terrainTypeList) {
+    public TerrainGenerator(Random seed, BoardSize boardSize, List<TerrainTileType> terrainTileTypeList) {
         this.seed = seed;
         this.boardSize = boardSize;
-        this.terrainTypeList = terrainTypeList;
+        this.terrainTileTypeList = terrainTileTypeList;
     }
 
     public int[][] generate(){
@@ -28,6 +28,7 @@ public class TerrainGenerator {
                 terrainIdMap[i][j] = terrainIdValueRemap(rangeValueRemap(openSimplexNoise.eval(i/magnification, j/magnification), -1, 1, 0, 1));
             }
         }
+
         return terrainIdMap;
     }
 
@@ -37,10 +38,10 @@ public class TerrainGenerator {
 
     private int terrainIdValueRemap(double value){
         double clampedValue = Math.max(0, Math.min(1, value));
-        double scaledValue = clampedValue * terrainTypeList.size();
+        double scaledValue = clampedValue * terrainTileTypeList.size();
 
-        if(scaledValue >= terrainTypeList.size()){
-            scaledValue = terrainTypeList.size() - 1;
+        if(scaledValue >= terrainTileTypeList.size()){
+            scaledValue = terrainTileTypeList.size() - 1;
         }
 
         return (int) Math.floor(scaledValue);

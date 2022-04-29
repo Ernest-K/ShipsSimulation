@@ -14,6 +14,7 @@ public class PositionController {
     private final BoardSize boardSize;
     private final PositionValidator positionValidator;
     private final RandomPositionGenerator randomPositionGenerator;
+    private Map<Ship, Position> shipPositionMap;
 
     public PositionController(Random seed, BoardSize boardSize) {
         this.seed = seed;
@@ -31,13 +32,14 @@ public class PositionController {
             }
             shipPositionMap.put(ship, tempPosition);
         });
+        this.shipPositionMap = shipPositionMap;
         return shipPositionMap;
     }
 
     public Position RandomMove(Position position){
         Direction randomDirection = Direction.getRandomDirection(seed);
         Position newPosition = changePosition(position, randomDirection);
-        while(positionValidator.borderCollision(newPosition)){
+        while(positionValidator.borderCollision(newPosition) && positionValidator.isOccupied(new ArrayList<>(shipPositionMap.values()), newPosition)){
             randomDirection = Direction.getRandomDirection(seed);
             newPosition = changePosition(position, randomDirection);
         }
@@ -66,7 +68,7 @@ public class PositionController {
         for(Position position : positionList){
             if(isInRange(position, referencePosition, range)){
                 return true;
-            };
+            }
         }
         return false;
     }
