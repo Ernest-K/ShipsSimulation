@@ -15,7 +15,7 @@ public class PositionValidator {
         return positionList.stream().noneMatch(value -> value.equals(position));
     }
 
-    public boolean borderCollision(Position position){
+    public boolean isBorderCollision(Position position){
         return position.getX() < 0 || position.getX() > boardSize.getWidth() - 1 || position.getY() < 0 || position.getY() > boardSize.getHeight() - 1;
     }
 }

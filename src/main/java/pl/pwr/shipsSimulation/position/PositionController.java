@@ -2,11 +2,10 @@ package pl.pwr.shipsSimulation.position;
 
 import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.ship.Ship;
+import pl.pwr.shipsSimulation.ship.ShipPosition;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class PositionController {
@@ -14,7 +13,7 @@ public class PositionController {
     private final BoardSize boardSize;
     private final PositionValidator positionValidator;
     private final RandomPositionGenerator randomPositionGenerator;
-    private Map<Ship, Position> shipPositionMap;
+    private List<ShipPosition> shipPositionList;
 
     public PositionController(Random seed, BoardSize boardSize) {
         this.seed = seed;
@@ -23,23 +22,23 @@ public class PositionController {
         this.randomPositionGenerator = new RandomPositionGenerator(seed, boardSize);
     }
 
-    public Map<Ship, Position> setOnRandomPosition(List<Ship> shipList){
-        Map<Ship, Position> shipPositionMap = new HashMap<>();
-        shipList.forEach(ship -> {
+    public List<ShipPosition> setOnRandomPosition(List<Ship> shipList){
+        List<ShipPosition> shipPositionList = new ArrayList<>();
+        for (Ship ship : shipList){
             Position tempPosition = randomPositionGenerator.generatePosition();
-            while(!positionValidator.isOccupied(new ArrayList<>(shipPositionMap.values()), tempPosition)){
+            while(!positionValidator.isOccupied(getPositionList(shipPositionList), tempPosition)){
                 tempPosition = randomPositionGenerator.generatePosition();
             }
-            shipPositionMap.put(ship, tempPosition);
-        });
-        this.shipPositionMap = shipPositionMap;
-        return shipPositionMap;
+            shipPositionList.add(new ShipPosition(ship, tempPosition));
+        }
+        this.shipPositionList = shipPositionList;
+        return shipPositionList;
     }
 
-    public Position RandomMove(Position position){
+    public Position randomMove(Position position){
         Direction randomDirection = Direction.getRandomDirection(seed);
         Position newPosition = changePosition(position, randomDirection);
-        while(positionValidator.borderCollision(newPosition) && positionValidator.isOccupied(new ArrayList<>(shipPositionMap.values()), newPosition)){
+        while(positionValidator.isBorderCollision(newPosition) || positionValidator.isOccupied(getPositionList(this.shipPositionList), newPosition)){
             randomDirection = Direction.getRandomDirection(seed);
             newPosition = changePosition(position, randomDirection);
         }
@@ -47,19 +46,11 @@ public class PositionController {
     }
 
     private Position changePosition(Position position, Direction direction){
-        switch (direction){
-            case TOP:
-                position.setY(position.getY() + 1);
-                break;
-            case BOTTOM:
-                position.setY(position.getY() - 1);
-                break;
-            case LEFT:
-                position.setX(position.getX() - 1);
-                break;
-            case RIGHT:
-                position.setX(position.getX() + 1);
-                break;
+        switch (direction) {
+            case TOP -> position.setY(position.getY() + 1);
+            case BOTTOM -> position.setY(position.getY() - 1);
+            case LEFT -> position.setX(position.getX() - 1);
+            case RIGHT -> position.setX(position.getX() + 1);
         }
         return position;
     }
@@ -73,7 +64,11 @@ public class PositionController {
         return false;
     }
 
-    private boolean isInRange(Position position1, Position position2, int range){
+    public boolean isInRange(Position position1, Position position2, int range){
         return position1.getX() >= position2.getX() - range && position1.getX() <= position2.getX() + range && position1.getY() >= position2.getY() - range && position1.getY() <= position2.getY() + range;
+    }
+
+    private List<Position> getPositionList(List<ShipPosition> shipPositionList){
+        return shipPositionList.stream().map(ShipPosition::getPosition).toList();
     }
 }

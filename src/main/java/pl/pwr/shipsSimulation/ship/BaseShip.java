@@ -2,13 +2,15 @@ package pl.pwr.shipsSimulation.ship;
 
 import java.util.UUID;
 
-public class SimpleShip implements Ship{
+public class BaseShip implements Ship {
     private final UUID teamId;
     private final ShipType shipType;
+    private final ShipStatistic shipStatistic;
 
-    public SimpleShip(UUID teamId, ShipType shipType) {
+    public BaseShip(UUID teamId, ShipType shipType) {
         this.teamId = teamId;
         this.shipType = shipType;
+        this.shipStatistic = shipType.getShipStatistic();
     }
 
     @Override
@@ -19,6 +21,11 @@ public class SimpleShip implements Ship{
     @Override
     public ShipType getType() {
         return shipType;
+    }
+
+    @Override
+    public ShipStatistic getShipStatistic() {
+        return shipStatistic;
     }
 
     @Override
