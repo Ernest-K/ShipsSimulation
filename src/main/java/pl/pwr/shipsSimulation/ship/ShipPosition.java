@@ -1,8 +1,9 @@
 package pl.pwr.shipsSimulation.ship;
 
+import pl.pwr.shipsSimulation.position.ObjectPosition;
 import pl.pwr.shipsSimulation.position.Position;
 
-public class ShipPosition {
+public class ShipPosition implements ObjectPosition {
     private final Ship ship;
     private Position position;
 
@@ -21,5 +22,13 @@ public class ShipPosition {
 
     public void setPosition(Position position) {
         this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return "ShipPosition{" +
+                "ship=" + ship +
+                ", position=" + position +
+                '}';
     }
 }

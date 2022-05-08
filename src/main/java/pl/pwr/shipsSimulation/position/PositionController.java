@@ -6,17 +6,14 @@ import pl.pwr.shipsSimulation.ship.ShipPosition;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class PositionController {
-    private final Random seed;
     private final BoardSize boardSize;
     private final PositionValidator positionValidator;
     private final RandomPositionGenerator randomPositionGenerator;
     private List<ShipPosition> shipPositionList;
 
-    public PositionController(Random seed, BoardSize boardSize) {
-        this.seed = seed;
+    public PositionController(long seed, BoardSize boardSize) {
         this.boardSize = boardSize;
         this.positionValidator = new PositionValidator(boardSize);
         this.randomPositionGenerator = new RandomPositionGenerator(seed, boardSize);
@@ -36,10 +33,10 @@ public class PositionController {
     }
 
     public Position randomMove(Position position){
-        Direction randomDirection = Direction.getRandomDirection(seed);
+        Direction randomDirection = Direction.getRandomDirection();
         Position newPosition = changePosition(position, randomDirection);
         while(positionValidator.isBorderCollision(newPosition) || positionValidator.isOccupied(getPositionList(this.shipPositionList), newPosition)){
-            randomDirection = Direction.getRandomDirection(seed);
+            randomDirection = Direction.getRandomDirection();
             newPosition = changePosition(position, randomDirection);
         }
         return newPosition;
@@ -53,15 +50,6 @@ public class PositionController {
             case RIGHT -> position.setX(position.getX() + 1);
         }
         return position;
-    }
-
-    public boolean isOtherPositionInRange(Position referencePosition, List<Position> positionList, int range){
-        for(Position position : positionList){
-            if(isInRange(position, referencePosition, range)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public boolean isInRange(Position position1, Position position2, int range){

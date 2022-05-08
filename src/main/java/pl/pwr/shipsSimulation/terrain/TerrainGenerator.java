@@ -4,21 +4,20 @@ import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.noise.OpenSimplexNoise;
 
 import java.util.List;
-import java.util.Random;
 
 public class TerrainGenerator {
-    private final Random seed;
+    private final long seed;
     private final BoardSize boardSize;
     private final List<TerrainTileType> terrainTileTypeList;
 
-    public TerrainGenerator(Random seed, BoardSize boardSize, List<TerrainTileType> terrainTileTypeList) {
+    public TerrainGenerator(long seed, BoardSize boardSize, List<TerrainTileType> terrainTileTypeList) {
         this.seed = seed;
         this.boardSize = boardSize;
         this.terrainTileTypeList = terrainTileTypeList;
     }
 
     public int[][] generate(){
-        OpenSimplexNoise openSimplexNoise = new OpenSimplexNoise(seed.nextLong());
+        OpenSimplexNoise openSimplexNoise = new OpenSimplexNoise(seed);
         int[][] terrainIdMap = new int[boardSize.getHeight()][boardSize.getWidth()];
 
         double magnification = 6;

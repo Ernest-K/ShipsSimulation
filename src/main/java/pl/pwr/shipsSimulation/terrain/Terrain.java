@@ -5,16 +5,13 @@ import pl.pwr.shipsSimulation.position.Position;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class Terrain {
-    public final Random seed;
     public final List<TerrainTileType> terrainTileTypeList;
     public final BoardSize boardSize;
     public int[][] terrainIdMap;
 
-    public Terrain(Random seed, BoardSize boardSize) {
-        this.seed = seed;
+    public Terrain(long seed, BoardSize boardSize) {
         this.terrainTileTypeList = Arrays.asList(TerrainTileType.class.getEnumConstants());
         this.boardSize = boardSize;
         TerrainGenerator terrainGenerator = new TerrainGenerator(seed, boardSize, terrainTileTypeList);

@@ -30,10 +30,10 @@ public class BaseShip implements Ship {
 
     @Override
     public String toString() {
-        return "SimpleShip{" +
+        return "BaseShip{" +
                 "teamId=" + teamId +
                 ", shipType=" + shipType +
-                ", shipStatistic=" + shipType.getShipStatistic() +
+                ", shipStatistic=" + shipStatistic +
                 '}';
     }
 }

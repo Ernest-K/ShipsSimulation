@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Application {
     public static void main(String[] args) {
-        Random seed = new Random();
+        long seed = new Random().nextLong();
         BoardSize boardSize = new BoardSize(32,32);
         Terrain terrain = new Terrain(seed, boardSize);
 
@@ -37,7 +37,8 @@ public class Application {
         AtomicInteger moves = new AtomicInteger(0);
 
         while(shipsController.getTeamListSize()>1){
-            shipsController.update();
+            shipsController.checkConflict();
+            shipsController.moveShips();
             moves.getAndIncrement();
         }
 

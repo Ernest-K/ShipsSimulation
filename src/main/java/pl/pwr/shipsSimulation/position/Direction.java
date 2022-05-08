@@ -5,7 +5,7 @@ import java.util.Random;
 public enum Direction {
     TOP, BOTTOM, LEFT, RIGHT;
 
-    public static Direction getRandomDirection(Random random){
-        return values()[random.nextInt(values().length)];
+    public static Direction getRandomDirection(){
+        return values()[new Random().nextInt(values().length)];
     }
 }
