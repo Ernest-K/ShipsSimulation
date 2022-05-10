@@ -1,9 +1,8 @@
 package pl.pwr.shipsSimulation.ship;
 
-import pl.pwr.shipsSimulation.position.ObjectPosition;
 import pl.pwr.shipsSimulation.position.Position;
 
-public class ShipPosition implements ObjectPosition {
+public class ShipPosition{
     private final Ship ship;
     private Position position;
 

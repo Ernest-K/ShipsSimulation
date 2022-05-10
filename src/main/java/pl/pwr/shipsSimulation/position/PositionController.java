@@ -10,26 +10,12 @@ import java.util.List;
 public class PositionController {
     private final BoardSize boardSize;
     private final PositionValidator positionValidator;
-    private final RandomPositionGenerator randomPositionGenerator;
     private List<ShipPosition> shipPositionList;
 
-    public PositionController(long seed, BoardSize boardSize) {
+    public PositionController(BoardSize boardSize, List<ShipPosition> shipPositionList) {
         this.boardSize = boardSize;
         this.positionValidator = new PositionValidator(boardSize);
-        this.randomPositionGenerator = new RandomPositionGenerator(seed, boardSize);
-    }
-
-    public List<ShipPosition> setOnRandomPosition(List<Ship> shipList){
-        List<ShipPosition> shipPositionList = new ArrayList<>();
-        for (Ship ship : shipList){
-            Position tempPosition = randomPositionGenerator.generatePosition();
-            while(!positionValidator.isOccupied(getPositionList(shipPositionList), tempPosition)){
-                tempPosition = randomPositionGenerator.generatePosition();
-            }
-            shipPositionList.add(new ShipPosition(ship, tempPosition));
-        }
         this.shipPositionList = shipPositionList;
-        return shipPositionList;
     }
 
     public Position randomMove(Position position){
@@ -58,5 +44,9 @@ public class PositionController {
 
     private List<Position> getPositionList(List<ShipPosition> shipPositionList){
         return shipPositionList.stream().map(ShipPosition::getPosition).toList();
+    }
+
+    public List<ShipPosition> getShipPositionList() {
+        return shipPositionList;
     }
 }

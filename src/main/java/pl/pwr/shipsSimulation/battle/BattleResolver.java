@@ -1,17 +1,23 @@
 package pl.pwr.shipsSimulation.battle;
 
-import pl.pwr.shipsSimulation.ship.ShipPosition;
+import pl.pwr.shipsSimulation.terrain.Terrain;
 
 public class BattleResolver {
-    public BattleResolver() {
+    private final Terrain terrain;
+
+    public BattleResolver(Terrain terrain) {
+        this.terrain = terrain;
     }
 
-//    return loser
-    public ShipPosition resolve(ShipPosition shipPosition1, ShipPosition shipPosition2){
-        if (shipPosition1.getShip().getShipStatistic().getAttack() > shipPosition2.getShip().getShipStatistic().getAttack()){
-            return shipPosition2;
+    public BattleResult resolve(Battle battle){
+        BattleResult battleResult = new BattleResult();
+        if (battle.getAttacker().getShip().getShipStatistic().getAttack() > battle.getDefender().getShip().getShipStatistic().getAttack()){
+            battleResult.setLoserShip(battle.getDefender());
+            battleResult.setWinnerShip(battle.getAttacker());
         }else{
-            return shipPosition1;
+            battleResult.setLoserShip(battle.getAttacker());
+            battleResult.setWinnerShip(battle.getDefender());
         }
+        return battleResult;
     }
 }

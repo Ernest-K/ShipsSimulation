@@ -1,6 +1,8 @@
 package pl.pwr.shipsSimulation.ship;
 
+import pl.pwr.shipsSimulation.battle.Battle;
 import pl.pwr.shipsSimulation.battle.BattleResolver;
+import pl.pwr.shipsSimulation.battle.BattleResult;
 import pl.pwr.shipsSimulation.position.PositionController;
 
 import java.util.ArrayList;
@@ -12,24 +14,28 @@ public class ShipsController {
     private final BattleResolver battleResolver;
     public final List<ShipPosition> shipPositionList;
 
-    public ShipsController(List<Ship> shipList, PositionController positionController) {
+    public ShipsController(List<Ship> shipList, PositionController positionController, BattleResolver battleResolver) {
         this.shipList = shipList;
         this.positionController = positionController;
-        this.battleResolver = new BattleResolver();
-        this.shipPositionList = positionController.setOnRandomPosition(shipList);
+        this.battleResolver = battleResolver;
+        this.shipPositionList = positionController.getShipPositionList();
     }
 
     public void checkConflict(){
         List<ShipPosition> shipPositionsToRemove = new ArrayList<>();
 
         for (ShipPosition shipPosition : shipPositionList){
+            if(shipPositionsToRemove.contains(shipPosition)){
+                continue;
+            }
             ShipPosition conflictShipPosition;
             if((conflictShipPosition = isConflict(shipPosition)) != null){
-                shipPositionsToRemove.add(battleResolver.resolve(shipPosition, conflictShipPosition));
+                BattleResult battleResult = battleResolver.resolve(new Battle(shipPosition, conflictShipPosition));
+                shipPositionsToRemove.add(battleResult.getLoserShip());
             }
         }
 
-        shipPositionsToRemove.forEach(shipPositionList::remove);
+        this.shipPositionList.removeAll(shipPositionsToRemove);
         updateShipList();
     }
 
