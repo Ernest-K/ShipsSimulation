@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Application {
     public static void main(String[] args) {
         long seed = new Random().nextLong();
-        BoardSize boardSize = new BoardSize(32,32);
+        BoardSize boardSize = new BoardSize(16,16);
         Terrain terrain = new Terrain(seed, boardSize);
         BattleResolver battleResolver = new BattleResolver(terrain);
         RandomPositionGenerator randomPositionGenerator = new RandomPositionGenerator(seed, boardSize);
@@ -28,15 +28,15 @@ public class Application {
         teamList.add(new Team("Green"));
 
         List<Ship> shipList = new ArrayList<>();
-        shipList.add(new BaseShip(teamList.get(0).getId(), ShipType.BATTLE_SHIP));
-        shipList.add(new BaseShip(teamList.get(1).getId(), ShipType.AIRCRAFT_CARRIER));
-        shipList.add(new BaseShip(teamList.get(2).getId(), ShipType.CRUISER));
+        shipList.add(new BaseShip(teamList.get(0), ShipType.BATTLE_SHIP));
+        shipList.add(new BaseShip(teamList.get(1), ShipType.AIRCRAFT_CARRIER));
+        shipList.add(new BaseShip(teamList.get(2), ShipType.CRUISER));
 
         List<ShipPosition> shipPositionList = randomPositionGenerator.generate(shipList);
         PositionController positionController = new PositionController(boardSize, shipPositionList);
-        ShipsController shipsController = new ShipsController(shipList, positionController, battleResolver);
+        ShipsController shipsController = new ShipsController(positionController, battleResolver);
 
-        shipPositionList.forEach(shipPosition -> System.out.println(shipPosition.getPosition()));
+        shipPositionList.forEach(shipPosition -> System.out.println(shipPosition.getShip().getTeam().getName()+"    "+shipPosition.getPosition()));
 
         AtomicInteger moves = new AtomicInteger(0);
 

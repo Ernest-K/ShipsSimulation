@@ -1,9 +1,9 @@
 package pl.pwr.shipsSimulation.ship;
 
-import java.util.UUID;
+import pl.pwr.shipsSimulation.team.Team;
 
 public interface Ship {
-    UUID getTeamId();
+    Team getTeam();
     ShipType getType();
     ShipStatistic getShipStatistic();
 }

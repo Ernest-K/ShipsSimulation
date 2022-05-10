@@ -3,19 +3,18 @@ package pl.pwr.shipsSimulation.ship;
 import pl.pwr.shipsSimulation.battle.Battle;
 import pl.pwr.shipsSimulation.battle.BattleResolver;
 import pl.pwr.shipsSimulation.battle.BattleResult;
+import pl.pwr.shipsSimulation.position.Position;
 import pl.pwr.shipsSimulation.position.PositionController;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShipsController {
-    private List<Ship> shipList;
     private final PositionController positionController;
     private final BattleResolver battleResolver;
     public final List<ShipPosition> shipPositionList;
 
-    public ShipsController(List<Ship> shipList, PositionController positionController, BattleResolver battleResolver) {
-        this.shipList = shipList;
+    public ShipsController(PositionController positionController, BattleResolver battleResolver) {
         this.positionController = positionController;
         this.battleResolver = battleResolver;
         this.shipPositionList = positionController.getShipPositionList();
@@ -25,18 +24,19 @@ public class ShipsController {
         List<ShipPosition> shipPositionsToRemove = new ArrayList<>();
 
         for (ShipPosition shipPosition : shipPositionList){
-            if(shipPositionsToRemove.contains(shipPosition)){
-                continue;
-            }
             ShipPosition conflictShipPosition;
             if((conflictShipPosition = isConflict(shipPosition)) != null){
+                //Prevent same battle twice
+                if(shipPositionsToRemove.contains(shipPosition) || shipPositionsToRemove.contains(conflictShipPosition)){
+                    continue;
+                }
                 BattleResult battleResult = battleResolver.resolve(new Battle(shipPosition, conflictShipPosition));
+                System.out.println(battleResult.getWinnerShip().getShip().getTeam().getName()+" destroy "+battleResult.getLoserShip().getShip().getTeam().getName());
                 shipPositionsToRemove.add(battleResult.getLoserShip());
             }
         }
 
         this.shipPositionList.removeAll(shipPositionsToRemove);
-        updateShipList();
     }
 
     public void moveShips(){
@@ -47,7 +47,7 @@ public class ShipsController {
 
     private ShipPosition isConflict(ShipPosition referenceShipPosition){
         List<ShipPosition> conflictShipList = shipPositionList.stream()
-                .filter(shipPosition -> shipPosition.getShip().getTeamId() != referenceShipPosition.getShip().getTeamId())
+                .filter(shipPosition -> shipPosition.getShip().getTeam().getId() != referenceShipPosition.getShip().getTeam().getId())
                 .toList();
 
         for (ShipPosition shipPosition : conflictShipList){
@@ -59,14 +59,13 @@ public class ShipsController {
     }
 
     private void moveShip(ShipPosition shipPosition){
-        shipPosition.setPosition(positionController.randomMove(shipPosition.getPosition()));
+        Position newPosition = positionController.randomMove(shipPosition.getPosition());
+        System.out.println(shipPosition.getShip().getTeam().getName()+" move to "+newPosition);
+        shipPosition.setPosition(newPosition);
     }
 
     public int getTeamListSize(){
-        return shipList.stream().map(Ship::getTeamId).distinct().toList().size();
+        return shipPositionList.stream().map(shipPosition -> shipPosition.getShip().getTeam()).distinct().toList().size();
     }
 
-    private void updateShipList(){
-        this.shipList = shipPositionList.stream().map(ShipPosition::getShip).toList();
-    }
 }

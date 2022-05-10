@@ -1,19 +1,15 @@
 package pl.pwr.shipsSimulation.position;
 
 import pl.pwr.shipsSimulation.board.BoardSize;
-import pl.pwr.shipsSimulation.ship.Ship;
 import pl.pwr.shipsSimulation.ship.ShipPosition;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PositionController {
-    private final BoardSize boardSize;
     private final PositionValidator positionValidator;
-    private List<ShipPosition> shipPositionList;
+    private final List<ShipPosition> shipPositionList;
 
     public PositionController(BoardSize boardSize, List<ShipPosition> shipPositionList) {
-        this.boardSize = boardSize;
         this.positionValidator = new PositionValidator(boardSize);
         this.shipPositionList = shipPositionList;
     }
