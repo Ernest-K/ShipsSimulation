@@ -1,4 +1,4 @@
-package pl.pwr.shipsSimulation.terrain;
+package pl.pwr.shipsSimulation.terrain.tile;
 
 public class TerrainTileBonus {
     private static final double DEFAULT_ATTACK_BONUS = 1;

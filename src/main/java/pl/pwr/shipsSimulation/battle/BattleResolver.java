@@ -17,10 +17,10 @@ public class BattleResolver {
         ShipPosition attackerShipPosition = battle.getAttacker();
         ShipPosition defenderShipPosition = battle.getDefender();
 
-        ShipStatistic attackerShipStatistic = attackerShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainType(attackerShipPosition.getPosition()).getTerrainBonus());
-        ShipStatistic defenderShipStatistic = defenderShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainType(defenderShipPosition.getPosition()).getTerrainBonus());
+        ShipStatistic attackerShipStatistic = attackerShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus());
+        ShipStatistic defenderShipStatistic = defenderShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
 
-        System.out.println(terrain.getTerrainType(attackerShipPosition.getPosition())+"  "+terrain.getTerrainType(defenderShipPosition.getPosition()));
+        System.out.println(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus()+"  "+terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
         System.out.println(attackerShipStatistic+"  "+defenderShipStatistic);
 
         //Less = better

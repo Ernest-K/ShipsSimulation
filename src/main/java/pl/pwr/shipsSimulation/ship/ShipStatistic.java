@@ -1,6 +1,6 @@
 package pl.pwr.shipsSimulation.ship;
 
-import pl.pwr.shipsSimulation.terrain.TerrainTileBonus;
+import pl.pwr.shipsSimulation.terrain.tile.TerrainTileBonus;
 
 public class ShipStatistic {
     private final double attack;

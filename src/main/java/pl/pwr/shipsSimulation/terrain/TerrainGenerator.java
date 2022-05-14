@@ -2,18 +2,19 @@ package pl.pwr.shipsSimulation.terrain;
 
 import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.noise.OpenSimplexNoise;
+import pl.pwr.shipsSimulation.terrain.tile.TerrainTile;
 
 import java.util.List;
 
 public class TerrainGenerator {
     private final long seed;
     private final BoardSize boardSize;
-    private final List<TerrainTileType> terrainTileTypeList;
+    private final List<TerrainTile> terrainTileList;
 
-    public TerrainGenerator(long seed, BoardSize boardSize, List<TerrainTileType> terrainTileTypeList) {
+    public TerrainGenerator(long seed, BoardSize boardSize, List<TerrainTile> terrainTileTypeList) {
         this.seed = seed;
         this.boardSize = boardSize;
-        this.terrainTileTypeList = terrainTileTypeList;
+        this.terrainTileList = terrainTileTypeList;
     }
 
     public int[][] generate(){
@@ -37,10 +38,10 @@ public class TerrainGenerator {
 
     private int terrainIdValueRemap(double value){
         double clampedValue = Math.max(0, Math.min(1, value));
-        double scaledValue = clampedValue * terrainTileTypeList.size();
+        double scaledValue = clampedValue * terrainTileList.size();
 
-        if(scaledValue >= terrainTileTypeList.size()){
-            scaledValue = terrainTileTypeList.size() - 1;
+        if(scaledValue >= terrainTileList.size()){
+            scaledValue = terrainTileList.size() - 1;
         }
 
         return (int) Math.floor(scaledValue);
