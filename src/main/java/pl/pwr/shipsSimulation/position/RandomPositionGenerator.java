@@ -23,7 +23,7 @@ public class RandomPositionGenerator {
 
         for (Ship ship : shipList){
             Position tempPosition = generateRandomPosition();
-            while(!positionValidator.isOccupied(shipPositionList.stream().map(ShipPosition::getPosition).toList(), tempPosition)){
+            while(positionValidator.isOccupied(shipPositionList.stream().map(ShipPosition::getPosition).toList(), tempPosition)){
                 tempPosition = generateRandomPosition();
             }
             shipPositionList.add(new ShipPosition(ship, tempPosition));

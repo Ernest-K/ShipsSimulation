@@ -35,6 +35,12 @@ public class Position {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Position)) {
+            return false;
+        }
         return this.x == ((Position)obj).x && this.y == ((Position)obj).y;
     }
 }

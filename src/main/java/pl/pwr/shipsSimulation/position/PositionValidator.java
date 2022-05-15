@@ -12,7 +12,7 @@ public class PositionValidator {
     }
 
     public boolean isOccupied(List<Position> positionList, Position position){
-        return positionList.stream().noneMatch(value -> value.equals(position));
+        return positionList.stream().anyMatch(value -> value.equals(position));
     }
 
     public boolean isBorderCollision(Position position){

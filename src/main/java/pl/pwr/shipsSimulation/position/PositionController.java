@@ -15,23 +15,23 @@ public class PositionController {
     }
 
     public Position randomMove(Position position){
-        Direction randomDirection = Direction.getRandomDirection();
-        Position newPosition = changePosition(position, randomDirection);
-        while(positionValidator.isBorderCollision(newPosition) || positionValidator.isOccupied(getPositionList(this.shipPositionList), newPosition)){
-            randomDirection = Direction.getRandomDirection();
-            newPosition = changePosition(position, randomDirection);
-        }
+        Position newPosition;
+        do{
+            newPosition = changePosition(position, Direction.getRandomDirection());
+        }while(positionValidator.isBorderCollision(newPosition) || positionValidator.isOccupied(getPositionList(this.shipPositionList), newPosition));
+
         return newPosition;
     }
 
     private Position changePosition(Position position, Direction direction){
+        Position newPosition = new Position(position.getX(), position.getY());
         switch (direction) {
-            case TOP -> position.setY(position.getY() + 1);
-            case BOTTOM -> position.setY(position.getY() - 1);
-            case LEFT -> position.setX(position.getX() - 1);
-            case RIGHT -> position.setX(position.getX() + 1);
+            case TOP -> newPosition.setY(newPosition.getY() + 1);
+            case BOTTOM -> newPosition.setY(newPosition.getY() - 1);
+            case LEFT -> newPosition.setX(newPosition.getX() - 1);
+            case RIGHT -> newPosition.setX(newPosition.getX() + 1);
         }
-        return position;
+        return newPosition;
     }
 
     public boolean isInRange(Position position1, Position position2, int range){

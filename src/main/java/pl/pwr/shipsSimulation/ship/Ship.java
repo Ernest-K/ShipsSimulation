@@ -1,6 +1,5 @@
 package pl.pwr.shipsSimulation.ship;
 
-import pl.pwr.shipsSimulation.ship.type.ShipType;
 import pl.pwr.shipsSimulation.team.Team;
 
 public interface Ship {

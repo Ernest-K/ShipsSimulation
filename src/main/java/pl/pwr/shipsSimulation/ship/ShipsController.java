@@ -5,6 +5,7 @@ import pl.pwr.shipsSimulation.battle.BattleResolver;
 import pl.pwr.shipsSimulation.battle.BattleResult;
 import pl.pwr.shipsSimulation.position.Position;
 import pl.pwr.shipsSimulation.position.PositionController;
+import pl.pwr.shipsSimulation.team.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +21,9 @@ public class ShipsController {
         this.shipPositionList = positionController.getShipPositionList();
     }
 
-    public void checkConflict(){
+    public List<BattleResult> checkConflict(){
         List<ShipPosition> shipPositionsToRemove = new ArrayList<>();
+        List<BattleResult> battleResultList = new ArrayList<>();
 
         for (ShipPosition shipPosition : shipPositionList){
             ShipPosition conflictShipPosition;
@@ -31,12 +33,13 @@ public class ShipsController {
                     continue;
                 }
                 BattleResult battleResult = battleResolver.resolve(new Battle(shipPosition, conflictShipPosition));
-                System.out.println(battleResult.getWinnerShip().getShip().getTeam().getName()+" destroy "+battleResult.getLoserShip().getShip().getTeam().getName());
+                battleResultList.add(battleResult);
                 shipPositionsToRemove.add(battleResult.getLoserShip());
             }
         }
 
         this.shipPositionList.removeAll(shipPositionsToRemove);
+        return battleResultList;
     }
 
     public void moveShips(){
@@ -60,12 +63,11 @@ public class ShipsController {
 
     private void moveShip(ShipPosition shipPosition){
         Position newPosition = positionController.randomMove(shipPosition.getPosition());
-        System.out.println(shipPosition.getShip().getTeam().getName()+" move to "+newPosition);
         shipPosition.setPosition(newPosition);
     }
 
-    public int getTeamListSize(){
-        return shipPositionList.stream().map(shipPosition -> shipPosition.getShip().getTeam()).distinct().toList().size();
+    public List<Team> getTeamList(){
+        return shipPositionList.stream().map(shipPosition -> shipPosition.getShip().getTeam()).distinct().toList();
     }
 
 }
