@@ -9,7 +9,7 @@ class SloopShip implements Ship {
     private Team team;
 
     SloopShip() {
-        shipStatistic = new ShipStatistic(100, 500, 5);
+        shipStatistic = new ShipStatistic(97, 450, 4);
     }
 
     public ShipStatistic getShipStatistic() {

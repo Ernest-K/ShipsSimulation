@@ -9,7 +9,7 @@ class GalleonShip implements Ship {
     private Team team;
 
     GalleonShip() {
-        this.shipStatistic = new ShipStatistic(80, 600, 3);
+        this.shipStatistic = new ShipStatistic(80, 500, 5);
     }
 
     @Override

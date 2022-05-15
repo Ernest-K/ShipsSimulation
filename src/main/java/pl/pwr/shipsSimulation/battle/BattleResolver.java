@@ -20,6 +20,17 @@ public class BattleResolver {
         ShipStatistic attackerShipStatistic = attackerShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus());
         ShipStatistic defenderShipStatistic = defenderShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
 
+        int attackerRange = attackerShipStatistic.getRange();
+        int defenderRange = defenderShipStatistic.getRange();
+
+        double attackBonus = calculateAttackBonus(attackerRange, defenderRange);
+
+        if(attackerRange > defenderRange){
+            attackerShipStatistic = attackerShipStatistic.applyRangeBonus(attackBonus);
+        }else{
+            defenderShipStatistic = defenderShipStatistic.applyRangeBonus(attackBonus);
+        }
+
         System.out.println(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus() + "  " + terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
         System.out.println(attackerShipStatistic + "  " + defenderShipStatistic);
 
@@ -39,5 +50,8 @@ public class BattleResolver {
 
     private double getTotalStrokes(double attack, double defend ){
         return defend/attack;
+    }
+    private double calculateAttackBonus(int attackerRange, int defenderRange){
+        return 1 + (Math.abs(attackerRange - defenderRange)/10.0);
     }
 }
