@@ -5,6 +5,7 @@ import pl.pwr.shipsSimulation.board.BoardSize;
 import pl.pwr.shipsSimulation.position.PositionController;
 import pl.pwr.shipsSimulation.position.RandomPositionGenerator;
 import pl.pwr.shipsSimulation.ship.*;
+import pl.pwr.shipsSimulation.ship.type.ShipType;
 import pl.pwr.shipsSimulation.team.Team;
 import pl.pwr.shipsSimulation.terrain.Terrain;
 
@@ -28,9 +29,9 @@ public class Application {
         teamList.add(new Team("Green"));
 
         List<Ship> shipList = new ArrayList<>();
-        shipList.add(new BaseShip(teamList.get(0), ShipType.BATTLE_SHIP));
-        shipList.add(new BaseShip(teamList.get(1), ShipType.AIRCRAFT_CARRIER));
-        shipList.add(new BaseShip(teamList.get(2), ShipType.CRUISER));
+        shipList.add(ShipFactory.getShip(ShipType.BRIGANTINE, teamList.get(0)));
+        shipList.add(ShipFactory.getShip(ShipType.GALLEON, teamList.get(1)));
+        shipList.add(ShipFactory.getShip(ShipType.SLOOP, teamList.get(2)));
 
         List<ShipPosition> shipPositionList = randomPositionGenerator.generate(shipList);
         PositionController positionController = new PositionController(boardSize, shipPositionList);

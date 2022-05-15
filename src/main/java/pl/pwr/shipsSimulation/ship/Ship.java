@@ -1,9 +1,10 @@
 package pl.pwr.shipsSimulation.ship;
 
+import pl.pwr.shipsSimulation.ship.type.ShipType;
 import pl.pwr.shipsSimulation.team.Team;
 
 public interface Ship {
     Team getTeam();
-    ShipType getType();
+    void setTeam(Team team);
     ShipStatistic getShipStatistic();
 }
