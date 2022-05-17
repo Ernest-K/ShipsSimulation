@@ -1,0 +1,26 @@
+[
+  {
+    "teamName": "Blue",
+    "ships": ["BRIGANTINE", "BRIGANTINE", "BRIGANTINE"]
+  },
+  {
+    "teamName": "Red",
+    "ships": ["GALLEON", "GALLEON", "GALLEON"]
+  },
+  {
+    "teamName": "Green",
+    "ships": ["SLOOP", "SLOOP", "SLOOP"]
+  },
+  {
+    "teamName": "Yellow",
+    "ships": ["BRIGANTINE", "BRIGANTINE", "BRIGANTINE"]
+  },
+  {
+    "teamName": "Purple",
+    "ships": ["GALLEON", "GALLEON", "GALLEON"]
+  },
+  {
+    "teamName": "Brown",
+    "ships": ["SLOOP", "SLOOP", "SLOOP"]
+  }
+]

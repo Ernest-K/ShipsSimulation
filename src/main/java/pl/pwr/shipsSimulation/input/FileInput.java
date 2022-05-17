@@ -59,5 +59,12 @@ public class FileInput implements Input{
                 this.shipList.add(ship);
             }
         }
+        if(!isCorrectNumberOfShips()){
+            throw new RuntimeException("Invalid number of ships");
+        }
+    }
+
+    private boolean isCorrectNumberOfShips(){
+        return this.shipList.size() < this.boardSize.getWidth() * this.boardSize.getHeight();
     }
 }

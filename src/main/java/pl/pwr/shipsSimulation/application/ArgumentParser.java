@@ -10,23 +10,28 @@ public class ArgumentParser {
     private String[] args;
 
     public ArgumentParser(String[] Args) {
-        switch (Args.length){
-            case 3:
+        switch (Args.length) {
+            case 3 -> {
                 this.boardWidth = Integer.parseUnsignedInt(Args[0]);
                 this.boardHeight = Integer.parseUnsignedInt(Args[1]);
                 this.fileName = Args[2];
-                break;
-            case 1:
+            }
+            case 2 -> {
+                this.boardWidth = Integer.parseUnsignedInt(Args[0]);
+                this.boardHeight = Integer.parseUnsignedInt(Args[1]);
+                this.fileName = DefaultArgument.FILE_NAME;
+            }
+            case 1 -> {
                 this.boardWidth = DefaultArgument.BOARD_WIDTH;
                 this.boardHeight = DefaultArgument.BOARD_HEIGHT;
                 this.fileName = Args[0];
-                break;
-            case 0:
+            }
+            case 0 -> {
                 this.boardWidth = DefaultArgument.BOARD_WIDTH;
                 this.boardHeight = DefaultArgument.BOARD_HEIGHT;
                 this.fileName = DefaultArgument.FILE_NAME;
-            default:
-                throw new RuntimeException("Invalid arguments");
+            }
+            default -> throw new RuntimeException("Invalid arguments");
         }
     }
 

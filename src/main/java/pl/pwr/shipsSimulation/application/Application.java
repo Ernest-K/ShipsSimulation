@@ -4,8 +4,6 @@ import pl.pwr.shipsSimulation.input.Input;
 import pl.pwr.shipsSimulation.simulation.Simulation;
 import pl.pwr.shipsSimulation.simulation.SimulationConfig;
 
-
-
 public class Application {
     public static void main(String[] args) {
         ArgumentParser argumentParser = new ArgumentParser(args);
