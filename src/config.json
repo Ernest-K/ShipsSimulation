@@ -1,0 +1,14 @@
+[
+  {
+    "teamName": "Blue",
+    "ships": ["BRIGANTINE"]
+  },
+  {
+    "teamName": "Red",
+    "ships": ["GALLEON"]
+  },
+  {
+    "teamName": "Green",
+    "ships": ["SLOOP"]
+  }
+]
