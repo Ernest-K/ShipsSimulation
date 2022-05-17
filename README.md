@@ -9,7 +9,7 @@ An agent-based ship combat simulation
 Clone the project
 
 ```bash
-  git clone https://github.com/Ernest-K/ShipsSimulation.git
+git clone https://github.com/Ernest-K/ShipsSimulation.git
 ```
 
 
