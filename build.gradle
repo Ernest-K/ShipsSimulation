@@ -4,7 +4,7 @@ plugins {
 }
 
 application{
-    mainClass = 'pl.pwr.shipsSimulation.application.Application'
+    mainClass = 'pl.pwr.ships.simulation.application.Application'
 }
 
 group 'org.example'
