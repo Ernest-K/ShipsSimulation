@@ -3,7 +3,10 @@ package pl.pwr.ships.simulation.terrain;
 import pl.pwr.ships.simulation.board.BoardSize;
 import pl.pwr.ships.simulation.noise.OpenSimplexNoise;
 import pl.pwr.ships.simulation.terrain.tile.TerrainTile;
+import pl.pwr.ships.simulation.terrain.tile.TerrainTileFactory;
+import pl.pwr.ships.simulation.terrain.tile.type.TerrainTileType;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class TerrainGenerator {
@@ -11,13 +14,17 @@ public class TerrainGenerator {
     private final BoardSize boardSize;
     private final List<TerrainTile> terrainTileList;
 
-    public TerrainGenerator(long seed, BoardSize boardSize, List<TerrainTile> terrainTileTypeList) {
+    public TerrainGenerator(long seed, BoardSize boardSize) {
         this.seed = seed;
         this.boardSize = boardSize;
-        this.terrainTileList = terrainTileTypeList;
+        this.terrainTileList = Arrays.stream(TerrainTileType.class.getEnumConstants()).map(TerrainTileFactory::getTerrainTile).toList();
     }
 
-    public int[][] generate(){
+    public Terrain generate(){
+        return new Terrain(terrainTileList, generateTerrainIdMap());
+    }
+
+    private int[][] generateTerrainIdMap(){
         OpenSimplexNoise openSimplexNoise = new OpenSimplexNoise(seed);
         int[][] terrainIdMap = new int[boardSize.getHeight()][boardSize.getWidth()];
 

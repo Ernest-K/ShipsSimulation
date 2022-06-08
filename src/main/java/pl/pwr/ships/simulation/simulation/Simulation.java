@@ -7,6 +7,7 @@ import pl.pwr.ships.simulation.position.RandomPositionGenerator;
 import pl.pwr.ships.simulation.ship.ShipPosition;
 import pl.pwr.ships.simulation.ship.ShipsController;
 import pl.pwr.ships.simulation.terrain.Terrain;
+import pl.pwr.ships.simulation.terrain.TerrainGenerator;
 
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Simulation {
     private final long seed;
+    private final TerrainGenerator terrainGenerator;
     private final Terrain terrain;
     private final BattleResolver battleResolver;
     private final RandomPositionGenerator randomPositionGenerator;
@@ -23,7 +25,8 @@ public class Simulation {
 
     public Simulation(SimulationConfig simulationConfig) {
         this.seed = new Random().nextLong();
-        this.terrain = new Terrain(seed, simulationConfig.getBoardSize());
+        this.terrainGenerator = new TerrainGenerator(seed, simulationConfig.getBoardSize());
+        this.terrain = terrainGenerator.generate();
         this.battleResolver = new BattleResolver(this.terrain);
         this.randomPositionGenerator = new RandomPositionGenerator(seed, simulationConfig.getBoardSize());
         this.shipPositionList = this.randomPositionGenerator.generate(simulationConfig.getShipList());
