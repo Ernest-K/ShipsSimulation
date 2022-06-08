@@ -12,8 +12,6 @@ public class BattleResolver {
     }
 
     public BattleResult resolve(Battle battle){
-        BattleResult battleResult = new BattleResult();
-
         ShipPosition attackerShipPosition = battle.getAttacker();
         ShipPosition defenderShipPosition = battle.getDefender();
 
@@ -33,13 +31,16 @@ public class BattleResolver {
         double defenderTotalStrokes = getTotalStrokes(defenderShipStatistic.getAttack(), attackerShipStatistic.getDefend());
 
         if (attackerTotalStrokes < defenderTotalStrokes){
-            battleResult.setLoserShip(battle.getDefender());
-            battleResult.setWinnerShip(battle.getAttacker());
+            return BattleResult.builder()
+                    .winnerShip(attackerShipPosition)
+                    .loserShip(defenderShipPosition)
+                    .build();
         }else{
-            battleResult.setLoserShip(battle.getAttacker());
-            battleResult.setWinnerShip(battle.getDefender());
+            return BattleResult.builder()
+                    .winnerShip(defenderShipPosition)
+                    .loserShip(attackerShipPosition)
+                    .build();
         }
-        return battleResult;
     }
 
     private double getTotalStrokes(double attack, double defend ){

@@ -1,27 +1,12 @@
 package pl.pwr.ships.simulation.battle;
 
+import lombok.Builder;
+import lombok.Getter;
 import pl.pwr.ships.simulation.ship.ShipPosition;
 
+@Getter
+@Builder
 public class BattleResult {
-    private ShipPosition winnerShip;
-    private ShipPosition loserShip;
-
-    public BattleResult() {
-    }
-
-    public ShipPosition getWinnerShip() {
-        return winnerShip;
-    }
-
-    public void setWinnerShip(ShipPosition winnerShip) {
-        this.winnerShip = winnerShip;
-    }
-
-    public ShipPosition getLoserShip() {
-        return loserShip;
-    }
-
-    public void setLoserShip(ShipPosition loserShip) {
-        this.loserShip = loserShip;
-    }
+    private final ShipPosition winnerShip;
+    private final ShipPosition loserShip;
 }
