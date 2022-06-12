@@ -2,6 +2,8 @@ package pl.pwr.ships.simulation.battle;
 
 import pl.pwr.ships.simulation.ship.ShipPosition;
 import pl.pwr.ships.simulation.ship.ShipStatistic;
+import pl.pwr.ships.simulation.statistic.DefaultStatisticCalculator;
+import pl.pwr.ships.simulation.statistic.StatisticCalculator;
 import pl.pwr.ships.simulation.terrain.Terrain;
 
 public class BattleResolver {
@@ -15,20 +17,17 @@ public class BattleResolver {
         ShipPosition attackerShipPosition = battle.getAttacker();
         ShipPosition defenderShipPosition = battle.getDefender();
 
-        ShipStatistic attackerShipStatistic = attackerShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus());
-        ShipStatistic defenderShipStatistic = defenderShipPosition.getShip().getShipStatistic().applyTerrainBonus(terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
+        StatisticCalculator statisticCalculator = new DefaultStatisticCalculator(attackerShipPosition.getShip().getShipStatistic(), defenderShipPosition.getShip().getShipStatistic());
 
-        double attackBonus = calculateAttackBonus(attackerShipStatistic.getRange(), defenderShipStatistic.getRange());
+        statisticCalculator.applyTerrainBonus(terrain.getTerrainTile(attackerShipPosition.getPosition()).getTerrainTileBonus(), terrain.getTerrainTile(defenderShipPosition.getPosition()).getTerrainTileBonus());
+        statisticCalculator.applyRangeBonus();
 
-        if(attackerShipStatistic.getRange() > defenderShipStatistic.getRange()){
-            attackerShipStatistic = attackerShipStatistic.applyRangeBonus(attackBonus);
-        }else{
-            defenderShipStatistic = defenderShipStatistic.applyRangeBonus(attackBonus);
-        }
+        ShipStatistic attackerStatistic = statisticCalculator.getAttackerStatistic();
+        ShipStatistic defenderStatistic = statisticCalculator.getDefenderStatistic();
 
         //Less = better
-        double attackerTotalStrokes = getTotalStrokes(attackerShipStatistic.getAttack(), defenderShipStatistic.getDefend());
-        double defenderTotalStrokes = getTotalStrokes(defenderShipStatistic.getAttack(), attackerShipStatistic.getDefend());
+        double attackerTotalStrokes = getTotalStrokes(attackerStatistic.getAttack(), defenderStatistic.getDefend());
+        double defenderTotalStrokes = getTotalStrokes(defenderStatistic.getAttack(), attackerStatistic.getDefend());
 
         if (attackerTotalStrokes < defenderTotalStrokes){
             return BattleResult.builder()
@@ -46,9 +45,4 @@ public class BattleResolver {
     private double getTotalStrokes(double attack, double defend ){
         return defend/attack;
     }
-
-    private double calculateAttackBonus(int attackerRange, int defenderRange){
-        return 1 + (Math.abs(attackerRange - defenderRange)/10.0);
-    }
-
 }
