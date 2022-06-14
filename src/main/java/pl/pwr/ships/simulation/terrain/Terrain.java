@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Terrain {
     private final List<TerrainTile> terrainTileList;
-    private int[][] terrainIdMap;
+    private final int[][] terrainIdMap;
 
     public Terrain(List<TerrainTile> terrainTileList, int [][]terrainIdMap) {
         this.terrainTileList = terrainTileList;
